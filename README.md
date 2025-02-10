@@ -23,6 +23,6 @@ emonHub docker: https://hub.docker.com/r/alexjunk/emonhub
 
 Latest image hosted on docker hub: [openenergymonitor/emoncms:latest](https://hub.docker.com/r/openenergymonitor/emoncms/)
 
-[Quickstart](web/README.md)
+[Quickstart](web)
 
 
