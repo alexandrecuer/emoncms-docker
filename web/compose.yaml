@@ -1,0 +1,45 @@
+services:
+
+  db:
+    image: mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=emoncms
+    volumes:
+      - emon-db-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  web:
+    image: openenergymonitor/emoncms:latest
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=emoncms
+      - MYSQL_USER=emoncms
+      - MYSQL_PASSWORD=emonpiemoncmsmysql2016
+      - REDIS_ENABLED=false
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PREFIX='emoncms'
+      - MQTT_ENABLED=false
+      - MQTT_HOST=mqtt
+      - MQTT_CLIENTID=emoncmsmqtt
+      - MQTT_USER=emonpi
+      - MQTT_PASSWORD=emonpimqtt2016
+      - MQTT_BASETOPIC=emon
+      - MQTT_PORT=1883
+      - PHPFINA_DIR=/var/opt/emoncms/phpfina/
+      - PHPTIMESERIES_DIR=/var/opt/emoncms/phptimeseries/
+    volumes:
+      - emon-phpfina:/var/opt/emoncms/phpfina
+      - emon-phptimeseries:/var/opt/emoncms/phptimeseries
+
+
+volumes:
+  emon-phpfina:
+  emon-phptimeseries:
+  emon-db-data:
