@@ -3,28 +3,37 @@
 ```
 docker build --build-arg="BUILD_FROM=php:8.2.27-apache" -t emoncms_legacy_docker .
 ```
+It will produce on your computer an image called `emoncms_legacy_docker`
 
 # how to use
 
-From this folder, initialize the /emoncms_conf folder
+From this folder, initialize the `/emoncms_conf` folder. The folders are given to the current host user but this is not really necessary.
 ```
 sudo mkdir /emoncms_conf
 sudo chown $USER /emoncms_conf/
 cp -R -f emoncms_conf /
 ```
 
-use the compose file to run the stack in portainer
+Use the compose file to run the stack in Portainer or with docker compose.
 
-you will have 4 containers : web, db, mqtt and adminer, which is a light version of phpmyadmin
+Portainer is a good choice for those who dont want to do things in command line.
 
-connect to adminer and create the emoncms database, then the emoncms user which you grant the rights on the stack network, here 172.22.0.*
+you will have 4 running containers on a network called emoncms_legacy, using a subnet in `172.22`: 
+- web,
+- db,
+- mqtt,
+- adminer, which is a light version of phpmyadmin
+
+Connect to adminer through the web ui to create :
+1) the `emoncms` database,
+2) the `emoncms` user which you grant the rights on the stack network, here `172.22.0.*`
 
 ```
 CREATE USER 'emoncms'@'172.22.0.%' IDENTIFIED BY 'emonpiemoncmsmysql2016';
 GRANT ALL ON emoncms.* TO 'emoncms'@'172.22.0.%';
 flush privileges;
 ```
-of course, you can secure things like that :
+Of course, you can secure things like that :
 
 ```
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
