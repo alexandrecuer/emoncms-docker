@@ -17,7 +17,7 @@ emonHub docker: https://hub.docker.com/r/alexjunk/emonhub
 
 # multi-containers version
 
-### An way to deploy a simple Emoncms installation with separate containers 
+### A way to deploy an Emoncms installation with separate containers 
 
 One for the php server, one for the database, and one for the broker : [Quickstart](web)
 
