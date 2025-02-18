@@ -1,3 +1,13 @@
+networks:
+  emoncms_legacy:
+    name: emoncms_legacy
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.22.0.0/24"
+          gateway: "172.22.0.1"
+
 services:
 
   db:
@@ -6,12 +16,26 @@ services:
       - MARIADB_ROOT_PASSWORD=emoncms
     volumes:
       - emon-db-data:/var/lib/mysql
+    networks:
+      - emoncms_legacy
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - emoncms_legacy
+
+  mqtt:
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    volumes:
+      - /emoncms_conf/mosquitto/config:/mosquitto/config
+    ports:
+      - 2883:1883
+    networks:
+      - emoncms_legacy
 
   web:
     image: openenergymonitor/emoncms:latest
@@ -25,7 +49,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PREFIX='emoncms'
-      - MQTT_ENABLED=false
+      - MQTT_ENABLED=true
       - MQTT_HOST=mqtt
       - MQTT_CLIENTID=emoncmsmqtt
       - MQTT_USER=emonpi
@@ -37,6 +61,8 @@ services:
     volumes:
       - emon-phpfina:/var/opt/emoncms/phpfina
       - emon-phptimeseries:/var/opt/emoncms/phptimeseries
+    networks:
+      - emoncms_legacy
 
 
 volumes:
