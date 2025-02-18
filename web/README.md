@@ -1,3 +1,10 @@
+# how to build
+
+```
+docker build --build-arg="BUILD_FROM=php:8.2.27-apache" -t emoncms_legacy_docker .
+```
+
+# how to use
 
 From this folder, initialize the /emoncms_conf folder
 ```
@@ -39,3 +46,4 @@ to connect, use the credentials, 127.0.0.1 for the host and 2883 for the port
 connect to the web container and install mariadb-client : `apt-get install mariadb-client`
 
 then connect to the database `mysql -h db --user=emoncms --password=emonpiemoncmsmysql2016`
+
