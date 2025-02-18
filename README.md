@@ -15,7 +15,7 @@ emonHub docker: https://hub.docker.com/r/alexjunk/emonhub
 ### For more details on how to organize you compose file : https://emoncms-docker.github.io/setup/
 
 
-# Single container version 
+# multi-containers version
 
 ### An (easy) way to deploy a simple Emoncms installation.
 
