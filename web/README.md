@@ -1,4 +1,4 @@
-# how to use the compose file
+# How to use the compose file ?
 
 From this folder, initialize the `/emoncms_conf` folder. Permissions are given to the current host user but this is not necessary.
 ```
@@ -9,13 +9,18 @@ cp -R -f emoncms_conf /
 
 Use the compose file to run the stack in Portainer or with docker compose.
 
-Portainer is a good choice for those who dont want to do things in command line.
+[Portainer](https://docs.portainer.io/start/install-ce/server/docker/linux) is a good choice for those who dont want to do things in command line.
 
-You will have 4 running containers on a network called emoncms_legacy, using a subnet in `172.22`: 
+![edit a stack in portainer](images/portainer_stack_edition.png)
+
+
+If you don't use redis, You will have 4 running containers on a network called emoncms_legacy, using a subnet in `172.22`: 
 - web,
 - db,
 - mqtt,
 - adminer, which is a light version of phpmyadmin
+
+![monitor the stack containers](images/portainer_stack_management.png)
 
 Connect to adminer through the web ui to create :
 1) the `emoncms` database,
@@ -26,6 +31,9 @@ CREATE USER 'emoncms'@'172.22.0.%' IDENTIFIED BY 'emonpiemoncmsmysql2016';
 GRANT ALL ON emoncms.* TO 'emoncms'@'172.22.0.%';
 flush privileges;
 ```
+
+![adminer](images/adminer.png)
+
 Of course, you can secure things like that :
 
 ```
