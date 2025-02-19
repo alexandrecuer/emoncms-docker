@@ -37,6 +37,12 @@ services:
     networks:
       - emoncms_legacy
 
+  redis:
+    image: redis
+    restart: unless-stopped
+    networks:
+      - emoncms_legacy
+
   web:
     image: openenergymonitor/emoncms:latest
     environment:
@@ -45,7 +51,7 @@ services:
       - MYSQL_DATABASE=emoncms
       - MYSQL_USER=emoncms
       - MYSQL_PASSWORD=emonpiemoncmsmysql2016
-      - REDIS_ENABLED=false
+      - REDIS_ENABLED=true
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PREFIX='emoncms'
